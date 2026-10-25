@@ -1,0 +1,43 @@
+name: Build VectorCraft for Chromebook (x86_64)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-chromebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-gnu
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            pkg-config \
+            libxkbcommon-dev \
+            libwayland-dev \
+            libx11-xcb-dev \
+            libfontconfig1-dev \
+            libgl1-mesa-dev
+
+      - name: Build Release Binary
+        run: cargo build --release --bin vectorcraft
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vectorcraft-chromebook-x86_64
+          path: target/release/vectorcraft
+          if-no-files-found: error
