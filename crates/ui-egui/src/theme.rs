@@ -507,7 +507,8 @@ pub fn mono(size: f32) -> FontId {
 /// it, or keep these families in definitions of one's own. Without the `interface-fonts` feature
 /// the families are egui's built-in fonts (and craft-fonts' faces in a build with them), which lack
 /// some symbols the panels show (→ ▾ ● ✓).
-pub fn install_fonts(ctx: &egui::Context) {
+pub fn install_fonts(ctx: pub fn install_fonts(ctx: &egui::Context) {egui::Context) {
+    setup_japanese_font(ctx);
     let mut fonts = FontDefinitions::default();
     let (ui, semi, mono) = interface_faces(&mut fonts);
     let stack = |fonts: &FontDefinitions, family: FontFamily| fonts.families.get(&family).cloned().unwrap_or_default();
@@ -660,4 +661,24 @@ mod tests {
             assert_eq!(Scheme::parse(Scheme::Classic.id()), Some(Scheme::Classic));
         }
     }
+}
+
+/// 日本語フォント（Noto Sans JP）を egui に適用するヘルパー
+pub fn setup_japanese_font(ctx: &egui::Context) {
+    let mut fonts = egui::FontDefinitions::default();
+    fonts.font_data.insert(
+        "noto_sans_jp".to_owned(),
+        egui::FontData::from_static(include_bytes!("../fonts/NotoSansJP-Regular.ttc")),
+    );
+    fonts
+        .families
+        .entry(egui::FontFamily::Proportional)
+        .or_default()
+        .insert(0, "noto_sans_jp".to_owned());
+    fonts
+        .families
+        .entry(egui::FontFamily::Monospace)
+        .or_default()
+        .insert(0, "noto_sans_jp".to_owned());
+    ctx.set_fonts(fonts);
 }
