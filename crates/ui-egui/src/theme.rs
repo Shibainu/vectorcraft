@@ -507,7 +507,7 @@ pub fn mono(size: f32) -> FontId {
 /// it, or keep these families in definitions of one's own. Without the `interface-fonts` feature
 /// the families are egui's built-in fonts (and craft-fonts' faces in a build with them), which lack
 /// some symbols the panels show (→ ▾ ● ✓).
-pub fn install_fonts(ctx: pub fn install_fonts(ctx: &egui::Context) {egui::Context) {
+pub fn install_fonts(ctx: &egui::Context) {
     setup_japanese_font(ctx);
     let mut fonts = FontDefinitions::default();
     let (ui, semi, mono) = interface_faces(&mut fonts);
@@ -663,7 +663,6 @@ mod tests {
     }
 }
 
-/// 日本語フォント（Noto Sans JP）を egui に適用するヘルパー
 pub fn setup_japanese_font(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
     fonts.font_data.insert(
