@@ -669,7 +669,6 @@ fn a_dialog_opens_with_its_first_field_focused_so_typing_and_enter_apply() {
 /// the Move dialog moves the art, and the New Document dialog creates a document as wide as typed.
 /// Panel fields keep the focus on Shift+Enter (`tests_numfields`).
 #[test]
-#[ignore]
 fn shift_enter_in_a_dialog_field_applies_it_and_confirms_the_dialog() {}
 
     let ctx = egui::Context::default();
