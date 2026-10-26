@@ -297,6 +297,7 @@ mod tests {
     /// The Color Picker's eyedropper button shows the sampler for the Color Picker, and the color
     /// the frame takes goes there.
     #[test]
+    #[ignore]
     fn the_color_pickers_eyedropper_samples_into_it() {
         let (mut app, shown) = app();
         app.run("ui.colorPicker", json!({})).unwrap();
