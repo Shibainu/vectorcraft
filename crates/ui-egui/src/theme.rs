@@ -624,8 +624,7 @@ pub fn apply_with(ctx: &egui::Context, b: Brightness, accent: Accent, scheme: Sc
 
 pub fn setup_japanese_font(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
-    fonts.font_data.insert(
-        "noto_sans_jp".to_owned(),
+    fonts.font_data.insert("noto_sans_jp".to_owned(),
         egui::FontData::from_static(include_bytes!("../fonts/NotoSansJP-Regular.ttc")).into(),
     );
     fonts.families.entry(egui::FontFamily::Proportional).or_default().insert(0, "noto_sans_jp".to_owned());
